@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import auth from '../hoc/auth';
 
 class MovieQuote extends Component {
     render(){
@@ -13,4 +13,4 @@ class MovieQuote extends Component {
 
 }
 
-export default MovieQuote;
+export default auth(MovieQuote);

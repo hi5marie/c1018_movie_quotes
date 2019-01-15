@@ -1,5 +1,7 @@
 import React, {Component, Fragment} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {signOut} from '../../actions';
 import SideNav from './side_nav';
 import './nav.scss';
 
@@ -50,11 +52,11 @@ class Nav extends Component {
     }
     handleSignOut = () => {
         console.log('Sign Out Button Clicked');
+        this.props.signOut();
     }
     renderLinks(){
-
         const {authLinks, commonLinks, noAuthLinks} = this.state;
-        const auth = false;
+        const {auth} = this.props;
 
         let links = [...commonLinks];
 
@@ -63,37 +65,29 @@ class Nav extends Component {
 
             links.push(
                 <li className="sign-out" key="sign-out">
-
                     <button onClick={this.handleSignOut} className="btn blue">Sign Out</button>
                 </li>
             )
-
         }else{
             links = [...links, ...noAuthLinks].map(this.buildLink);
-            // links = [...links, ...noAuthLinks];
         }
         return links;
-
     }
     render(){
-
         const links = this.renderLinks();
 
         return (
             <Fragment>
 
                 <nav className="blue darken-3">
-
                     <Link className="brand-logo" to="/">Movie Quotes</Link>
 
                     <a href="#" data-target="side-nav" className="sidenav-trigger">
                         <i className="material-icons">menu</i>
                     </a>
-
                     <ul className="right hide-on-med-and-down">
                         {links}
                     </ul>
-
                 </nav>
 
                 <SideNav links={links}/>
@@ -103,4 +97,12 @@ class Nav extends Component {
         );
     }
 }
-export default Nav;
+
+function mapStateToProps(state){
+    return{
+        auth: state.user.auth
+    }
+}
+export default connect(mapStateToProps, {
+    signOut: signOut
+})(Nav);

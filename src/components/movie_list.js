@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 
+
 class MovieList extends Component {
-
     isPrivate = this.props.match.params.type === 'private';
-
 
     render(){
         console.log('Is Private:', this.isPrivate);
@@ -21,4 +20,4 @@ class MovieList extends Component {
 
 }
 
-export default MovieList;
+export default (MovieList);
